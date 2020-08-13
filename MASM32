@@ -1,0 +1,643 @@
+INCLUDE C:\Irvine\Irvine32.inc
+.386
+.STACK 4096
+ExitProcess proto,dwExitCode:DWORD
+DumpRegs PROTO
+.data
+    testing BYTE "Testing ...........", 13, 10, 0
+    print_menu_1 BYTE "ASSEMBLY LANGUAGE BY A'IN HAZWANI 1170057", 13, 10
+    print_menu_2 BYTE "1. CHAPTER 4", 13, 10
+    print_menu_3 BYTE "2. CHAPTER 6", 13, 10
+    print_exit BYTE "3. QUIT", 13, 10, 0
+    print_input BYTE "Enter a number from menu: ", 0
+    print_finish BYTE 13, 10, "Thank you", 13, 10, 13, 10, 0
+    print_main_menu BYTE "6. Main Menu", 13, 10, 0
+    debuging BYTE "debuggingg ...........", 13, 10, 0
+
+    chapter4_1 BYTE "CHAPTER 4",  13, 10
+    chapter4_2 BYTE "1. Data Transfer Instruction",  13, 10
+    chapter4_3 BYTE "2. Addition and Substraction",  13, 10
+    chapter4_4 BYTE "3. Data Related Operators and Directives",  13, 10
+    chapter4_5 BYTE "4. Addressing Modes",  13, 10
+    chapter4_6 BYTE "5. JMP and LOOP Instructions",  13, 10, 0
+
+    chapter4_1_1 BYTE "ADDITION CALCULATOR", 13, 10, 13, 10
+    chapter4_1_2 BYTE "Enter positive number: ", 0
+    chapter4_1_3 BYTE "Enter negative number: ", 0
+    chapter4_1_4 BYTE "The result for addition is: ", 0
+    chapter4_1_5 BYTE "We have an array of 11, 22, 33, 44, 55",13, 10
+    chapter4_1_6 BYTE "Printitng array using direct offset", 13, 10, 13, 10
+    chapter4_1_7 BYTE "First position: ", 0
+    chapter4_1_8 BYTE "Second position: ", 0
+    chapter4_1_9 BYTE "Third position: ", 0
+    chapter4_1_10 BYTE "Fourth position: ", 0
+    chapter4_1_11 BYTE "Fifth position: ", 0
+    chapter4_1_number1 SBYTE ?
+    chapter4_1_number2 SBYTE ?
+    chapter4_1_array BYTE 11, 22, 33, 44, 55
+
+    chapter4_2_1 BYTE "Enter your name: ", 0
+    chapter4_2_2 BYTE "Your name in reversed: ", 0
+    chapter4_2_3 BYTE "Enter a number to inverse: ", 0
+    chapter4_2_4 BYTE "Your number after inversed: ", 0
+    chapter4_2_name BYTE 100 DUP(?)
+    chapter4_2_reversed BYTE 100 DUP(?)
+    chapter4_2_count DWORD ?
+
+    chapter4_3_1 BYTE "Enter your name: ", 0
+    chapter4_3_2 BYTE "Your name in binary: ", 0
+    chapter4_3_3 BYTE "Enter a number to inverse: ", 0
+    chapter4_3_4 BYTE "Your number after inversed: ", 0
+    chapter4_3_5 BYTE "Max input is: ", 0
+    chapter4_3_space BYTE ", ", 0
+    chapter4_3_name BYTE 100 DUP(?)
+    chapter4_3_count DWORD ?
+
+    chapter4_4_1 BYTE "We have array of 10, 20, 30, 40, 50", 0
+    chapter4_4_2 BYTE "Printing an array using Indirect Operand: ", 0
+    chapter4_4_3 BYTE "Printing an array using Indexed Operand: ", 0
+    chapter4_4_4 BYTE "Printing an array using Pointers Operand: ", 0
+    chapter4_4_array DWORD 10, 20, 30, 40, 50
+    chapter4_4_space BYTE " ", 0
+    chapter4_4_ptr DWORD chapter4_4_array
+
+    chapter4_5_1 BYTE "Enter number of rows: ", 0
+    chapter4_5_star BYTE "* ", 0
+
+    chapter6_1 BYTE "CHAPTER 6",  13, 10
+    chapter6_2 BYTE "1. Boolean and Comparison Instruction",  13, 10
+    chapter6_3 BYTE "2. Conditional Jumps",  13, 10
+    chapter6_4 BYTE "3. Conditional Loops and Instruction",  13, 10
+    chapter6_5 BYTE "4. Conditional Structures",  13, 10
+    chapter6_6 BYTE "5. Conditional Control Flow Directives",  13, 10, 0
+
+    chapter6_1_1 BYTE "Insert your name: ", 0
+    chapter6_1_2 BYTE "Your name in capital latter: ", 0
+    chapter6_1_3 BYTE "Your name in small latter: ", 0
+    chapter6_1_4 BYTE "Your name in XOR hash: ", 0
+    chapter6_1_5 BYTE "Insert a number: ", 0
+    chapter6_1_6 BYTE "Reverse number using NOT: ", 0
+    chapter6_1_name BYTE 100 DUP(?)
+
+    chapter6_2_1 BYTE "Insert number of mosquitoes larva: ", 0
+    chapter6_2_2 BYTE "Possible to get infected", 13, 10, 0
+    chapter6_2_3 BYTE "Good, very clean", 13, 10, 0
+    chapter6_2_4 BYTE "Very Bad, need to clean up!", 13, 10, 0
+
+    chapter6_3_1 BYTE "Insert number for multiplication: ", 0
+    chapter6_3_2 DWORD ? 
+    chapter6_3_3 BYTE "Multiplication: ", 0
+    chapter6_3_space BYTE " ", 0
+
+    chapter6_4_1 BYTE "Insert first number: ", 0
+    chapter6_4_2 BYTE "Insert second number: ", 0
+    chapter6_4_3 BYTE "Second number is bigger than first number", 13, 10, 0
+    chapter6_4_4 BYTE "First number is bigger than second number", 13, 10, 0
+    chapter6_4_5 BYTE "Insert a number: ", 0
+    chapter6_4_6 BYTE "In range of 1 and 10", 0
+    chapter6_4_7 BYTE "Out of range of 0 and 10", 0
+    chapter6_4_8 BYTE "Insert you age: ", 0
+    chapter6_4_9 BYTE "Your age are not quite in your peak.", 13, 10, 0
+    chapter6_4_10 BYTE "Your age are starting to grown up", 13, 10, 0
+    chapter6_4_11 BYTE "Printing 2 times using WHILE: ", 0
+    chapter6_4_space BYTE " ", 0
+
+    chapter6_5_1 BYTE "Insert your age: ", 0
+    chapter6_5_2 DWORD 18
+    chapter6_5_3 BYTE "Yeayyy, you can drive", 13, 10, 0
+    chapter6_5_4 BYTE "Sorry, you cannot drive", 13, 10, 0
+    chapter6_5_5 BYTE "We have an array of 23, 345, -99, 56, -124", 13, 10, 0
+    chapter6_5_6 BYTE "Printing array using .REPEAT directives: ", 0
+    chapter6_5_7 BYTE "Printing array using .WHILE directives: ", 0
+    chapter6_5_array DWORD 23, 345, -99, 56, -124
+    chapter6_5_space BYTE " ", 0
+.code
+main PROC
+
+begin:
+    call Crlf
+    mov edx, OFFSET print_menu_1
+    call WriteString
+    mov edx, OFFSET print_input
+    call WriteString
+    call ReadInt
+    cmp eax, 1
+    je CHAPTER4
+    cmp eax, 2
+    je CHAPTER6
+    cmp eax, 3
+    je FINISH
+    jmp begin
+
+call4_1:
+    call CHAPTER_4_1
+    jmp CHAPTER4
+
+call4_2:
+    call CHAPTER_4_2
+    jmp CHAPTER4
+
+call4_3:
+    call CHAPTER_4_3
+    jmp CHAPTER4
+
+call4_4:
+    call CHAPTER_4_4
+    jmp CHAPTER4
+
+call4_5:
+    call CHAPTER_4_5
+    jmp CHAPTER4
+
+call6_1:
+    call CHAPTER_6_1
+    jmp CHAPTER6
+
+call6_2:
+    call CHAPTER_6_2
+    jmp CHAPTER6
+
+call6_3:
+    call CHAPTER_6_3
+    jmp CHAPTER6
+
+call6_4:
+    call CHAPTER_6_4
+    jmp CHAPTER6
+
+call6_5:
+    call CHAPTER_6_5
+    jmp CHAPTER6
+
+CHAPTER4:
+    call Crlf
+    mov edx, OFFSET chapter4_1
+    call WriteString
+    mov edx, OFFSET print_main_menu
+    call WriteString
+    mov edx, OFFSET print_input
+    call WriteString
+    call ReadInt
+    cmp eax, 1
+    je call4_1
+    cmp eax, 2
+    je call4_2
+    cmp eax, 3
+    je call4_3
+    cmp eax, 4
+    je call4_4
+    cmp eax, 5
+    je call4_5
+    cmp eax, 6
+    je begin
+    jmp CHAPTER4
+
+CHAPTER6:
+    call Crlf
+    mov edx, OFFSET chapter6_1
+    call WriteString
+    mov edx, OFFSET print_main_menu
+    call WriteString
+    mov edx, OFFSET print_input
+    call WriteString
+    call ReadInt
+    cmp eax, 1
+    je call6_1
+    cmp eax, 2
+    je call6_2
+    cmp eax, 3
+    je call6_3
+    cmp eax, 4
+    je call6_4
+    cmp eax, 5
+    je call6_5
+    cmp eax, 6
+    je begin
+    jmp CHAPTER6
+
+FINISH:
+    mov edx, OFFSET print_finish
+    call WriteString
+    INVOKE ExitProcess, 0
+main ENDP
+CHAPTER_4_1 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter4_1_1
+    call WriteString
+    call ReadInt
+    mov chapter4_1_number1, al
+    mov edx, OFFSET chapter4_1_3
+    call WriteString
+    call ReadInt
+    mov chapter4_1_number2, al
+    movsx eax, chapter4_1_number1
+    movsx ebx, chapter4_1_number2
+    add ebx, eax
+    xchg eax, ebx
+    mov edx, OFFSET chapter4_1_4
+    call WriteString
+    call WriteInt
+    call Crlf
+    call Crlf
+    mov edx, OFFSET chapter4_1_5
+    call WriteString
+    movzx eax, [chapter4_1_array+0]
+    call WriteInt
+    call Crlf
+    mov edx, OFFSET chapter4_1_8
+    call WriteString
+    movzx eax, [chapter4_1_array+1]
+    call WriteInt
+    call Crlf
+    mov edx, OFFSET chapter4_1_9
+    call WriteString
+    movzx eax, [chapter4_1_array+2]
+    call WriteInt
+    call Crlf
+    mov edx, OFFSET chapter4_1_10
+    call WriteString
+    movzx eax, [chapter4_1_array+3]
+    call WriteInt
+    call Crlf
+    mov edx, OFFSET chapter4_1_11
+    call WriteString
+    movzx eax, [chapter4_1_array+4]
+    call WriteInt
+    call Crlf
+    call Crlf
+    popad
+    ret
+CHAPTER_4_1 ENDP
+
+CHAPTER_4_2 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter4_2_1
+    call WriteString
+    mov edx, OFFSET chapter4_2_name
+    mov ecx, SIZEOF chapter4_2_name
+    call ReadString
+    mov chapter4_2_count, eax
+    mov ecx, chapter4_2_count
+    mov esi, OFFSET chapter4_2_name
+    add esi, chapter4_2_count
+    dec esi
+    mov edi, 0
+    
+L1:
+    mov al, BYTE PTR [esi]
+    mov [chapter4_2_reversed+edi], al
+    sub esi, TYPE chapter4_2_reversed
+    inc edi
+    loop L1
+
+    mov edx, OFFSET chapter4_2_2
+    call WriteString
+    mov edx, OFFSET chapter4_2_reversed
+    call WriteString
+    call Crlf
+    call Crlf
+    mov edx, OFFSET chapter4_2_3
+    call WriteString
+    call ReadInt
+    neg eax
+    mov edx, OFFSET chapter4_2_4
+    call WriteString
+    call WriteInt
+    call Crlf
+    popad
+    ret
+CHAPTER_4_2 ENDP
+
+CHAPTER_4_3 PROC
+    pushad
+    call Crlf
+    mov eax, LENGTHOF chapter4_3_name
+    mov edx, OFFSET chapter4_3_5
+    call WriteString
+    call WriteInt
+    call Crlf
+    mov edx, OFFSET chapter4_3_1
+    call WriteString
+    mov edx, OFFSET chapter4_3_name
+    mov ecx, SIZEOF chapter4_3_name
+    call ReadString
+    mov chapter4_3_count, eax
+    mov esi, OFFSET chapter4_3_name
+    mov ecx, chapter4_3_count
+    mov edx, OFFSET chapter4_3_2
+    call WriteString
+L1:
+    movzx eax, BYTE PTR [esi]
+    mov ebx, TYPE BYTE
+    call WriteBinB
+    mov edx, OFFSET chapter4_3_space
+    call WriteString
+    inc esi
+    loop L1
+    call Crlf
+    popad
+    ret
+CHAPTER_4_3 ENDP
+
+CHAPTER_4_4 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter4_4_1
+    call WriteString
+    call Crlf
+    mov edx, OFFSET chapter4_4_2
+    call WriteString
+
+    mov esi, OFFSET chapter4_4_array
+    mov ecx, LENGTHOF chapter4_4_array
+L1:
+    mov eax, [esi]
+    call WriteInt
+    mov edx, OFFSET chapter4_4_space
+    call WriteString
+    add esi, TYPE chapter4_4_array
+    loop L1
+
+    call Crlf
+    mov edx, OFFSET chapter4_4_3
+    call WriteString
+    mov esi, 0
+    mov ecx, LENGTHOF chapter4_4_array
+L2:
+    mov eax, [chapter4_4_array + esi]
+    call WriteInt
+    mov edx, OFFSET chapter4_4_space
+    call WriteString
+    add esi, TYPE chapter4_4_array
+    loop L2
+
+    call Crlf
+    mov edx, OFFSET chapter4_4_4
+    call WriteString
+    mov esi, chapter4_4_ptr
+    mov ecx, LENGTHOF chapter4_4_array
+L3:
+    mov eax, [esi]
+    call WriteInt
+    mov edx, OFFSET chapter4_4_space
+    call WriteString
+    add esi, TYPE chapter4_4_array
+    loop L3
+    call Crlf
+    popad
+    ret
+CHAPTER_4_4 ENDP
+
+CHAPTER_4_5 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter4_5_1
+    call WriteString
+    call ReadInt
+    call Crlf
+    mov ecx, eax
+L1:
+    push ecx
+    mov ebx, eax
+    L2:
+        cmp ebx, 0
+        je L3
+        mov edx, OFFSET chapter4_5_star
+        call WriteString
+        dec ebx
+        jmp L2
+    L3:
+    pop ecx
+    call Crlf
+    loop L1
+    call Crlf
+    popad
+    ret
+CHAPTER_4_5 ENDP
+
+CHAPTER_6_1 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter6_1_1
+    call WriteString
+    mov edx, OFFSET chapter6_1_name
+    mov ecx, SIZEOF chapter6_1_name
+    call ReadString
+    mov ecx, eax
+    mov esi, OFFSET chapter6_1_name
+L1:
+    and BYTE PTR [esi], 11011111b
+    inc esi
+    loop L1
+
+    mov edx, OFFSET chapter6_1_2
+    call WriteString
+    mov edx, OFFSET chapter6_1_name
+    call WriteString
+    call Crlf
+    
+    mov ecx, eax
+    mov esi, OFFSET chapter6_1_name
+L2:
+    or BYTE PTR [esi], 01100000b
+    inc esi
+    loop L2
+    mov edx, OFFSET chapter6_1_3
+    call WriteString
+    mov edx, OFFSET chapter6_1_name
+    call WriteString
+    call Crlf
+
+    mov ecx, eax
+    mov esi, OFFSET chapter6_1_name
+L3:
+    xor BYTE PTR [esi], 01001010b
+    inc esi
+    loop L3
+    mov edx, OFFSET chapter6_1_4
+    call WriteString
+    mov edx, OFFSET chapter6_1_name
+    call WriteString
+    call Crlf
+
+    call Crlf
+    mov edx, OFFSET chapter6_1_5
+    call WriteString
+    call ReadInt
+    not eax
+    inc eax
+    mov edx, OFFSET chapter6_1_6
+    call WriteString
+    call WriteInt
+    call Crlf
+    popad
+    ret
+CHAPTER_6_1 ENDP
+
+CHAPTER_6_2 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter6_2_1
+    call WriteString
+    call ReadInt
+    cmp eax, 0
+    jz L2
+    cmp eax, 10
+    jl L1
+    jge L3
+L2:
+    mov edx, OFFSET chapter6_2_3
+    call WriteString
+    jmp exit_fx
+L1:
+    mov edx, OFFSET chapter6_2_2
+    call WriteString
+    jmp exit_fx
+L3:
+    mov edx, OFFSET chapter6_2_4
+    call WriteString
+exit_fx:
+    call Crlf
+    popad
+    ret
+CHAPTER_6_2 ENDP
+
+CHAPTER_6_3 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter6_3_1
+    call WriteString
+    call ReadInt
+    mov chapter6_3_2, eax
+    mov ecx, 10
+    mov ebx, eax
+    mov edx, OFFSET chapter6_3_3
+    call WriteString
+L1:
+    call WriteInt
+    mov edx, OFFSET chapter6_3_space
+    call WriteString
+    add eax, ebx
+    loopnz L1
+    call Crlf
+    popad
+    ret
+CHAPTER_6_3 ENDP
+
+CHAPTER_6_4 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter6_4_1
+    call WriteString
+    call ReadInt
+    mov ebx, eax
+    mov edx, OFFSET chapter6_4_2
+    call WriteString
+    call ReadInt
+    cmp eax, ebx
+    jg L1
+    mov edx, OFFSET chapter6_4_4
+    call WriteString
+    jmp exit_1
+L1:
+    mov edx, OFFSET chapter6_4_3
+    call WriteString
+
+    call Crlf
+    call Crlf
+    mov edx, OFFSET chapter6_4_5
+    call WriteString
+    call ReadInt
+    cmp eax, 0
+    jge L2
+    jmp exit_1
+L2:
+    cmp eax, 10
+    jle L3
+    mov edx, OFFSET chapter6_4_7
+    call WriteString
+    jmp exit_1
+L3:
+    mov edx, OFFSET chapter6_4_6
+    call WriteString
+exit_1:
+    call Crlf
+    call Crlf
+    mov edx, OFFSET chapter6_4_8
+    call WriteString
+    call ReadInt
+    cmp eax, 3
+    jle L4
+    cmp eax, 90
+    jge L4
+    mov edx, OFFSET chapter6_4_10
+    call WriteString
+    jmp exit_2
+L4:
+    mov edx, OFFSET chapter6_4_9
+    call WriteString
+exit_2:
+    call Crlf
+    mov edx, OFFSET chapter6_4_11
+    call WriteString
+    mov eax, 2
+L5:
+    cmp eax, 22
+    je exit_3
+    call WriteInt
+    mov edx, OFFSET chapter6_4_space
+    call WriteString
+    add eax, 2
+    jmp L5
+exit_3:
+    call Crlf
+    popad
+    ret
+CHAPTER_6_4 ENDP
+
+CHAPTER_6_5 PROC
+    pushad
+    call Crlf
+    mov edx, OFFSET chapter6_5_1
+    call WriteString
+    call ReadInt
+    mov ebx, chapter6_5_2
+    .IF eax >= ebx
+        mov edx, OFFSET chapter6_5_3
+        call WriteString
+    .ELSE
+        mov edx, OFFSET chapter6_5_4
+        call WriteString
+    .ENDIF
+    call Crlf
+    mov edx, OFFSET chapter6_5_5
+    call WriteString
+    mov edx, OFFSET chapter6_5_6
+    call WriteString
+    mov esi, 0
+    .REPEAT
+    mov eax, [chapter6_5_array+esi]
+    call WriteInt
+    mov edx, OFFSET chapter6_5_space
+    call WriteString
+    add esi, 4
+    .UNTIL esi==20
+    call Crlf
+    mov esi, 0
+    mov edx, OFFSET chapter6_5_7
+    call WriteString
+    .WHILE esi<20
+    mov eax, [chapter6_5_array+esi]
+    call WriteInt
+    mov edx, OFFSET chapter6_5_space
+    call WriteString
+    add esi, 4
+    .ENDW
+    call Crlf
+    popad
+    ret
+CHAPTER_6_5 ENDP
+
+END main
